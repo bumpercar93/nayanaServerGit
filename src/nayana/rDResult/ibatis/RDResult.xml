@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="rDResult">
+
+	<typeAlias alias="rdresultVO" type="nayana.vo.RDResultVO"/>
+	
+	<select id="getAllList" resultClass="rdresultVO">
+		SELECT * FROM RECOMM_DIET_RESULT
+	</select>
+	
+	<insert id="insertResult" parameterClass="rdresultVO">
+		INSERT INTO RECOMM_DIET_RESULT(
+			  RDR_SEQ
+			, RA_CODE_AGE
+			, RD_CODE_DSS
+			, RDW_CODE_WT
+			, RDF_CODE_FOOD
+			, RDR_NAME
+			, RDR_CONTENT
+		)VALUES(
+			  recomm_diet_result_seq.nextval
+			, #ra_code_age#
+			, #rd_code_dss#
+			, #rdw_code_wt#
+			, #rdf_code_food#
+			, #rdr_name#
+			, #rdr_content#
+		)
+	</insert>
+	
+	<select id="rdResult" parameterClass="map" resultClass="rdresultVO">
+		SELECT RDR_SEQ, RDR_NAME, RDR_CONTENT FROM RECOMM_DIET_RESULT WHERE
+		RA_CODE_AGE = #ra_code_age# AND 
+		RD_CODE_DSS = #rd_code_dss# AND 
+		RDW_CODE_WT = #rdw_code_wt#
+	</select>
+	
+	<update id="updateRd" parameterClass="rdresultVO">
+		UPDATE RECOMM_DIET_RESULT
+		SET    RA_CODE_AGE = #ra_code_age#,
+			   RD_CODE_DSS = #rd_code_dss#,
+			   RDW_CODE_WT = #rdw_code_wt#,
+			   RDF_CODE_FOOD = #rdf_code_food#,
+			   RDR_NAME = #rdr_name#,
+			   RDR_CONTENT = #rdr_content#  
+		WHERE RDR_SEQ = #rdr_seq#
+	</update>
+	
+	<select id="getSeq" parameterClass="map" resultClass="int">
+		SELECT RDR_SEQ FROM RECOMM_DIET_RESULT WHERE
+		RA_CODE_AGE = #ra_code_age# AND 
+		RD_CODE_DSS = #rd_code_dss# AND 
+		RDW_CODE_WT = #rdw_code_wt# AND
+		RDR_NAME = #rdr_name#
+	</select>
+	
+</sqlMap>

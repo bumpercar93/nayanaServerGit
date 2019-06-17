@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="Prescription">
+	<typeAlias alias="prescriptionVO" type="nayana.vo.PrescriptionVO"/>
+	
+	<insert id="insertPrescription" parameterClass="prescriptionVO">
+		insert into prescription
+		values (prescription_seq.nextval, #mem_id#, #ps_pt_name#, #ps_pt_regno#, #ps_isu_date#,
+				#ps_isu_agency#, #ps_hp_tel#, #ps_hp_fax#, #ps_dss_num#, #ps_dr_name#, #ps_dr_num#,
+				#ps_medicine#, #ps_doses_medi#, #ps_doses_num#, #ps_all_doses_day#, #ps_usage#)
+	</insert>
+	
+	<select id="getMedicine" parameterClass="string" resultClass="string">
+		select	ps_medicine
+		from	prescription
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDosesMedi" parameterClass="string" resultClass="string">
+		select	ps_doses_medi
+		from	prescription
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDosesNum" parameterClass="string" resultClass="string">
+		select	ps_doses_num
+		from	prescription
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getAllDosesDay" parameterClass="string" resultClass="string">
+		select	ps_all_doses_day
+		from	prescription
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getUsage" parameterClass="string" resultClass="string">
+		select	ps_usage
+		from	prescription
+		where	mem_id = #mem_id#
+	</select>
+	
+</sqlMap>

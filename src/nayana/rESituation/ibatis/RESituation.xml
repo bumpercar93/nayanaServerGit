@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//http://ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="rESituation">
+	<typeAlias alias="resituationVO" type="nayana.vo.RESituationVO"/>
+	
+	<select id="getAllList" resultClass="resituationVO">
+		SELECT * FROM RECOMM_EXERCISE_SITUATION
+	</select>
+</sqlMap>

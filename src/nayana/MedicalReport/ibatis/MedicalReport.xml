@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="MedicalReport">
+	<typeAlias alias="MRVO" type="nayana.vo.MedicalReportVO"/>
+	
+	<insert id="insertMedicalReport" parameterClass="MRVO">
+		insert into medical_report
+		values (medical_report_seq.nextval, #mem_id#, #mr_medi_part#, #mr_serial_num#,
+				#mr_writer#, #mr_date#, #mr_pt_regno#, #mr_pt_addr#, #mr_pt_name#,
+				#mr_pt_gen#, #mr_pt_bir#, #mr_pt_age#, #mr_pt_dss_name#, #mr_tt_finding#)
+	</insert>
+	
+	<select id="getRegNo" parameterClass="string" resultClass="string">
+		select	mr_pt_regno
+		from	medical_report
+		where	mem_id = #mem_id#
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//http://ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="rEResult">
+
+	<typeAlias alias="reresultVO" type="nayana.vo.REResultVO"/>
+	
+	<select id="getAllList" resultClass="reresultVO">
+		SELECT * FROM RECOMM_EXERCISE_RESULT
+	</select>
+	
+	<insert id="insertExercise" parameterClass="reresultVO">
+		INSERT INTO RECOMM_EXERCISE_RESULT(RER_SEQ, RA_CODE_AGE, RER_CODE_BODY, RES_CODE_SITU, RD_CODE_DSS, RER_CODE_EXE, RER_NAME, RER_CONTENT)
+					VALUES(recomm_exercise_result_seq.nextval, #ra_code_age#, #rer_code_body#, #res_code_situ#, #rd_code_dss#, #rer_code_exe#, #rer_name#, #rer_content#)
+					
+		<selectKey keyProperty="rer_seq" resultClass="int">
+			SELECT RECOMM_EXERCISE_RESULT_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<select id="reResult" parameterClass="map" resultClass="reresultVO">
+		SELECT RER_SEQ, RER_NAME, RER_CONTENT FROM RECOMM_EXERCISE_RESULT WHERE
+			RA_CODE_AGE = #ra_code_age# AND
+			RER_CODE_BODY = #rer_code_body# AND
+			RES_CODE_SITU = #res_code_situ# AND
+			RD_CODE_DSS = #rd_code_dss#
+	</select>
+	
+	<update id="updateExercise" parameterClass="reresultVO">
+		UPDATE RECOMM_EXERCISE_RESULT
+		SET    RA_CODE_AGE = #ra_code_age#,
+			   RER_CODE_BODY = #rer_code_body#,
+			   RES_CODE_SITU = #res_code_situ#,
+			   RD_CODE_DSS = #rd_code_dss#,
+			   RER_CODE_EXE = #rer_code_exe#,
+			   RER_NAME = #rer_name#,
+			   RER_CONTENT = #rer_content#  
+		WHERE RER_SEQ = #rer_seq#
+	</update>
+	
+	<select id="getSeq" parameterClass="map" resultClass="int">
+		SELECT RER_SEQ FROM RECOMM_EXERCISE_RESULT WHERE
+		RA_CODE_AGE = #ra_code_age# AND 
+		RER_CODE_BODY = #rer_code_body# AND 
+		RES_CODE_SITU = #res_code_situ# AND
+		RD_CODE_DSS = #rd_code_dss# AND
+		RER_NAME = #rer_name#
+	</select>
+	
+</sqlMap>

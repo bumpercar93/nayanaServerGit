@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="inbody">
+	<typeAlias alias="inbodyVO" type="nayana.vo.InbodyVO"/>
+
+	<select id="callData" parameterClass="string" resultClass="inbodyVO">
+		select * 
+		from inbody
+		where mem_id = #mem_id#
+	</select>
+	
+	<insert id="insertInbody" parameterClass="inbodyVO">
+		insert into inbody
+		values (INBODY_SEQ.nextval, #mem_id#, #ib_num#, #ib_height#, #ib_weight#, #ib_age#,
+				#ib_gen#, #ib_date#, #ib_muscle#, #ib_fat#, #ib_bmi#, #ib_fat_rate#,
+				#ib_abd_rate#, #ib_score#, #ib_mb_rate#)
+	</insert>
+	
+	<select id="getHeight" parameterClass="string" resultClass="string">
+		select	ib_height
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getWeight" parameterClass="string" resultClass="string">
+		select	ib_weight
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getMuscle" parameterClass="string" resultClass="string">
+		select	ib_muscle
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getFat" parameterClass="string" resultClass="string">
+		select	ib_fat
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getBmi" parameterClass="string" resultClass="string">
+		select	ib_bmi
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getFatRate" parameterClass="string" resultClass="string">
+		select	ib_fat_rate
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getAbdRate" parameterClass="string" resultClass="string">
+		select	ib_abd_rate
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getScore" parameterClass="string" resultClass="string">
+		select	ib_score
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+	<select id="getMbRate" parameterClass="string" resultClass="string">
+		select	ib_mb_rate
+		from	inbody
+		where	mem_id = #mem_id#
+	</select>
+
+</sqlMap>

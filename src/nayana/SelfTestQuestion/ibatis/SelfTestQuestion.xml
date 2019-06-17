@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="selfTestQuestion">
+	
+	<typeAlias alias="selfTestQuestionVO" type="nayana.vo.SelfTestQuestionVO"/>
+	
+	<insert id="insertSelfTestQuestion" parameterClass="selfTestQuestionVO">
+		insert into SELF_TEST_QUESTION
+		values(SELF_TEST_QUESTION_SEQ.nextval, #self_seq#, #self_que_con#, #self_que_num#)
+	</insert>
+	
+	<update id="updateSelfTestQuestion" parameterClass="map">
+		update	SELF_TEST_QUESTION
+		set		self_que_con = #self_que_con#
+		where	self_seq = #self_seq#
+		and		self_que_num = #self_que_num#
+	</update>
+	
+	<select id="getAllSelfTestQuestion" parameterClass="int" resultClass="string">
+		select	self_que_con
+		from	SELF_TEST_QUESTION
+		where	self_seq = #self_seq#
+	</select>
+	
+</sqlMap>

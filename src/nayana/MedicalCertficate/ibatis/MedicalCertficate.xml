@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="MedicalCertficate">
+	<typeAlias alias="MCVO" type="nayana.vo.MedicalCertificateVO"/>
+	
+	<insert id="insertMedcalCertficate" parameterClass="MCVO">
+		insert into medical_certificate
+		values (MEDICAL_CERTIFICATE_SEQ.nextval, #mem_id#, #mc_pt_name#, #mc_pt_gen#, 
+				#mc_pt_bir#, #mc_pt_age#, #mc_pt_addr#, #mc_pt_phone#, #mc_pt_dss_name#,
+				#mc_dss_num#, #mc_onsetdate#, #mc_dgs_date#, #mc_afteropinion#, #mc_remarks#,
+				#mc_usage#, #mc_isu_agency#, #mc_hp_addr#, #mc_hp_tel#, #mc_dr_name#, #mc_dr_num#)
+	</insert>
+	
+	<select id="getName" parameterClass="string" resultClass="string">
+		select 	mc_pt_name
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getGender" parameterClass="string" resultClass="string">
+		select 	mc_pt_gen
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getAge" parameterClass="string" resultClass="string">
+		select 	mc_pt_age
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getAddr" parameterClass="string" resultClass="string">
+		select 	mc_pt_addr
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getTel" parameterClass="string" resultClass="string">
+		select 	mc_pt_phone
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDssName" parameterClass="string" resultClass="string">
+		select 	mc_pt_dss_name
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>	
+	
+	<select id="getAfterOpinion" parameterClass="string" resultClass="string">
+		select 	mc_afteropinion
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>	
+	
+	<select id="getOnsetDate" parameterClass="string" resultClass="string">
+		select 	mc_onsetdate
+		from	medical_certificate
+		where	mem_id = #mem_id#
+	</select>	
+	
+</sqlMap>
+

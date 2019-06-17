@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="selfTest">
+	
+	<typeAlias alias="selftestVO" type="nayana.vo.SelfTestVO"/>
+	
+	<insert id="insertSelfTest" parameterClass="selftestVO">
+		insert into self_test
+		values(self_test_seq.nextval, #self_title#, sysdate, sysdate, #mem_id#, 'N')
+	</insert>
+	
+	<update id="updateSelfTest" parameterClass="map">
+		update  self_test
+		set     self_title = #self_title#, self_update = sysdate
+		where   self_seq = #self_seq#
+	</update>
+	
+	<delete id="deleteSelfTest" parameterClass="int">
+		delete from self_test
+		where self_seq = #self_seq#
+	</delete>
+	
+	<select id="getAllSelfTest" resultClass="selftestVO">
+		select * from self_test order by self_seq
+	</select>
+	
+	<select id="getSelfTestVO" parameterClass="int" resultClass="selftestVO">
+		select	*
+		from	self_test
+		where   self_seq = #self_seq#
+	</select>
+	
+	<select id="getSeq" parameterClass="map" resultClass="int">
+		select	self_seq
+		from	self_test
+		where	mem_id = #mem_id#
+		and		self_title = #self_title#
+	</select>
+	
+</sqlMap>

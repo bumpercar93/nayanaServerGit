@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="boardHealth">
+
+	<typeAlias alias="boardhcVO" type="nayana.vo.BoardHealthVO"/>
+	
+	<!-- 게시글 등록 -->
+	<insert id="insertBoard" parameterClass="boardhcVO">
+		INSERT INTO BOARD_HEALTH (
+			  BH_SEQ
+			, BH_TITLE
+			, BH_CONTENT
+			, BH_MEM_ID
+			, BH_DATE
+			, BH_UPDATEWT
+			, BH_UPDATE
+			, BH_CNT
+			, BH_STATUS
+		) VALUES (
+			  BOARD_HEALTH_SEQ.NEXTVAL
+			, #bh_title#
+			, #bh_content#
+			, #bh_mem_id#
+			, SYSDATE
+			, #bh_updatewt#
+			, SYSDATE
+			, 0
+			, 'N'
+		)
+	</insert>
+	
+	<!-- 전체 게시글 조회 -->
+	<select id="getAllBoard" resultClass="boardhcVO">
+		SELECT	BH_SEQ, BH_TITLE, BH_CONTENT, BH_MEM_ID, TO_CHAR(BH_DATE, 'YYYY-MM-DD') BH_DATE, BH_CNT
+		FROM 	BOARD_HEALTH
+		ORDER 	BY BH_SEQ DESC
+	</select>
+
+	<!-- 선택 게시글 조회 -->
+	<select id="getBoard" parameterClass="int" resultClass="boardhcVO">
+		SELECT	*
+		FROM 	BOARD_HEALTH
+		WHERE	BH_SEQ = #bh_seq#
+	</select>
+	
+	<!-- 조회수 -->
+	<update id="boardCntUp" parameterClass="int">
+		UPDATE	BOARD_HEALTH
+		SET		BH_CNT = BH_CNT + 1
+		WHERE	BH_SEQ = #bh_seq#
+	</update>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterClass="boardhcVO">
+		UPDATE	BOARD_HEALTH
+		SET		BH_TITLE = #bh_title#
+			  , BH_CONTENT = #bh_content#
+			  , BH_MEM_ID = #bh_mem_id#
+			  , BH_UPDATEWT = #bh_updatewt#
+			  , BH_UPDATE = SYSDATE
+		WHERE	BH_SEQ = #bh_seq#
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterClass="int">
+		DELETE FROM 	BOARD_HEALTH
+		WHERE			BH_SEQ = #bh_seq#
+	</update>
+	
+	<!-- 게시글 검색 -->
+	<select id="getSearchTitle" parameterClass="string" resultClass="boardhcVO">
+		SELECT		*
+		FROM		BOARD_HEALTH
+		WHERE		BH_TITLE LIKE '%' || #bh_title# || '%'
+		ORDER BY	BH_SEQ	
+	</select>
+	
+	<!-- 시퀀스 조회 -->
+	<select id="getSeq" parameterClass="map" resultClass="int">
+		SELECT BH_SEQ FROM BOARD_HEALTH WHERE BH_MEM_ID = #bh_mem_id# AND BH_TITLE = #bh_title#
+	</select>
+	
+	<select id="recentData" resultClass="boardhcVO">
+		select * 
+		from (  select * 
+				from board_health 
+				order by bh_date desc) 
+				<![CDATA[where rownum <=4]]>
+	</select>
+	
+	
+</sqlMap>

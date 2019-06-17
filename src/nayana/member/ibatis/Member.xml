@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="member">
+	
+	<typeAlias alias="memberVO" type="nayana.vo.MemberVO"/>
+	
+	<select id="login" parameterClass="map" resultClass="memberVO">
+		select  *
+		from    member
+		where   mem_id = #mem_id#
+		and     mem_pw = #mem_pw#
+	</select>
+	
+	<insert id="signup" parameterClass="memberVO">
+		insert into member
+		values (#mem_id#, #mem_pw#, #mem_name#, #mem_gen#, 
+				#mem_regno1#, #mem_regno2#, #mem_phone#, #mem_email#,
+				#mem_addr1#, #mem_addr2#, #mem_status#, #mem_right#)
+	</insert>
+	
+	<select id="idCheck" parameterClass="string" resultClass="string">
+		select	mem_id
+		from	member
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="genderCount" parameterClass="string" resultClass="int">
+		select count(*)
+		from member
+		where mem_gen = #mem_gen#
+	</select>
+	
+	<select id="findID" parameterClass="map" resultClass="string">
+		select	mem_id
+		from	member
+		where	mem_name = #mem_name#
+		and		mem_regno1 = #mem_regno1#
+		and		mem_regno2 = #mem_regno2#
+	</select>
+	
+	<select id="findPW" parameterClass="map" resultClass="string">
+		select	mem_email
+		from	member
+		where	mem_id = #mem_id#
+		and		mem_regno1 = #mem_regno1#
+		and		mem_regno2 = #mem_regno2#
+	</select>
+	
+	<update id="updatePW" parameterClass="map">
+		update	member
+		set		mem_pw = #mem_pw#
+		where	mem_id = #mem_id#
+	</update>
+	
+	<select id="getAllMember" resultClass="memberVO">
+		select * 
+		from member 
+		order by mem_right,mem_name
+	</select>
+	
+	<update id="updateMember" parameterClass="memberVO" >
+		update member
+		set mem_pw = #mem_pw#,
+			mem_phone = #mem_phone#,
+			mem_addr1 = #mem_addr1#,
+			mem_addr2 = #mem_addr2#,
+			mem_email = #mem_email#
+		where mem_id = #mem_id#
+	</update>
+	
+	<delete id="deleteMember" parameterClass="string">
+		delete from member
+		where mem_id=#mem_id#
+	
+	</delete>
+	
+	<update id="modifyMember" parameterClass="memberVO" >
+		update member
+		set mem_pw = #mem_pw#,
+			mem_phone = #mem_phone#,
+			mem_addr1 = #mem_addr1#,
+			mem_addr2 = #mem_addr2#,
+			mem_email = #mem_email#
+		where mem_id = #mem_id#
+	</update>
+	
+	
+	
+	
+	
+</sqlMap>

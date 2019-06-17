@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="SurgicalConfirmation">
+	<typeAlias alias="SCVO" type="nayana.vo.SurgicalConfirmationVO"/>
+	
+	<insert id="insertSurgicalConfirmation" parameterClass="SCVO">
+		insert into surgical_confirmation
+		values (SURGICAL_CONFIRMATION_SEQ.nextval, #mem_id#, #sc_medi_part#, #sc_date#, #sc_serial_num#,
+				#sc_regno#, #sc_hz_part#, #sc_hz_date#, #sc_pt_name#, #sc_pt_gen#, #sc_pt_bir#,
+				#sc_pt_age#, #sc_pt_addr#, #sc_dgs_name#, #sc_dgs_con#, #sc_op_date#,
+				#sc_isu_date#, #sc_dr_name#, #sc_dr_num#)
+	</insert>
+	
+	<select id="getHzPart" parameterClass="string" resultClass="string">
+		select	sc_hz_part
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getHzDate" parameterClass="string" resultClass="string">
+		select	sc_hz_date
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDgsName" parameterClass="string" resultClass="string">
+		select	sc_dgs_name
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDgsCon" parameterClass="string" resultClass="string">
+		select	sc_dgs_con
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getOpDate" parameterClass="string" resultClass="string">
+		select	sc_op_date
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+	<select id="getDrName" parameterClass="string" resultClass="string">
+		select	sc_dr_name
+		from	surgical_confirmation
+		where	mem_id = #mem_id#
+	</select>
+	
+</sqlMap>

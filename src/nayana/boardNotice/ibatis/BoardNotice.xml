@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  이 문서는 SQl문을 직접 처리할 수 있는 내용을 기술하는 문서입니다. -->
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache/org/dtd/sql-map-2.dtd">
+<!--
+	namespace속성 : 아래에서 작성한 SQL문을 호출할 떄 같이 사용한다.
+  -->
+ 
+<sqlMap namespace="noticeboard">
+
+	<!--
+		개별 sql문 처리 문서에서 사용할 typeAlias를 지정할 수 있다.
+	  -->
+	<typeAlias  alias = "noticeBoardVo" type = "nayana.vo.BoardNoticeVO"/>
+	
+	<!--
+		이 영역에 SQL문에 맞는 태그를 사용하여 처리할 SQL문을 기술한다.
+		
+		사용할 수 있는 기본적인 태그들
+		<select> ~~~ </select>
+		<insert> ~~~ </insert>
+		<update> ~~~ </update>
+		<delete> ~~~ </delete>
+	======================================================== 
+	위 태그에서 사용되는 속성들
+	1) id속성 : 해당 태그를 호출할 떄 <sqlMap>태그의 namespace속성값과
+			    같이 연결하여 사용하는 이름
+	2) parameterClass속성 : sql문에 사용될 데이터가 들어있는 객체를 지정한다.
+						   (보통 VO클래스, 자바의 자료형이름 등이 사용된다.)	
+	3) resultClass속성 : select문을 실행한 결과를 담을 객체를 지정한다.
+						   (보통 VO클래스, 자바의 자료형이름 등이 사용된다.)
+	  -->
+	  
+	<insert id = "insertBoard" parameterClass = "noticeBoardVo">
+		insert into board_notice
+		values (board_notice_seq.nextval,#bn_title#,#bn_content#, #mem_id#,sysdate,#bn_updatewt#,sysdate,0,'N')
+	</insert>
+
+	<!-- parameterClass나 ResultClass에 alias로 설정할 수 있다. -->  
+	
+	<update id = "updateBoard" parameterClass = "noticeBoardVo">
+		update board_notice 
+		set 
+		bn_title = #bn_title# 
+		,bn_date = sysdate 
+		,bn_content = #bn_content#
+		where bn_seq = #bn_seq#
+	</update>
+	
+	<!--
+		parameterClass에 설정되는 값이 단일값(즉, 1개의 데이터)이면
+		SQL문에 이 값을 나타내는 변수는 특별히 이름이 정해지지 않았다.
+		즉, 사용자가 임의로 지정할 수 있다.
+	  -->
+	<delete id = "deleteBoard" parameterClass = "int">
+		<!-- delete from jdbc_board where board_no = #board_no# -->
+		delete from board_notice where bn_seq = #bn_seq#
+	</delete>
+	
+	<select id = "getAllBoardList" resultClass ="noticeBoardVo">
+		select bn_seq, bn_title, mem_id,
+		to_char(bn_date, 'YYYY-MM-DD') bn_date, 
+		bn_cnt, bn_content from board_notice
+		order by bn_seq desc 
+	</select>
+	
+	<select id = "getBoard" resultClass ="noticeBoardVo" parameterClass = "int">
+		select bn_seq, bn_title, mem_id,
+		to_char(bn_date, 'YYYY-MM-DD') bn_date, 
+		bn_cnt, bn_content from board_notice 
+		where bn_seq = #bn_seq#
+	</select> 
+	
+	<!--
+		파라미터로 가져온 값을 컬럼명등의 자리에 사용할 경우에는
+		#기호 대신 $기호를 사용하여 나타낸다.
+	  -->
+	<select id = "getSearchBoardList" parameterClass = "map" resultClass ="noticeBoardVo">
+		select bn_seq, bn_title, mem_id,
+		to_char(bn_date, 'YYYY-MM-DD') bn_date, 
+		bn_cnt, bn_content from board_notice
+		where bn_title like '%'||#bn_title#||'%' 
+		order by bn_seq desc 
+	</select>
+	
+	<update id = "setCountIncrement" parameterClass = "int">
+		update board_notice set bn_cnt = bn_cnt +1 where bn_seq = #bn_seq#
+	</update>
+	
+	<select id="getSearchTitle" parameterClass="string" resultClass="noticeBoardVo">
+		select		*
+		from		board_notice
+		where		bn_title LIKE '%' || #bn_title# || '%'
+		order by	bn_seq desc
+	</select>
+	
+	<select id="getSearchWriter" parameterClass="string" resultClass="noticeBoardVo">
+		select		*
+		from		board_notice
+		where		mem_id LIKE '%' || #mem_id# || '%'
+		order by	bn_seq desc
+	</select>
+	
+	<select id="getSearchContent" parameterClass="string" resultClass="noticeBoardVo">
+		select		*
+		from		board_notice
+		where		bn_content LIKE '%' || #bn_content# || '%'
+		order by	bn_seq desc
+	</select>
+	  
+</sqlMap>
